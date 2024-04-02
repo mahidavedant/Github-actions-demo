@@ -1,0 +1,37 @@
+# Define the name of the GitHub Actions workflow
+name: ML Model Training Workflow
+
+# Define when the workflow should be triggered
+on:
+  push:
+    branches:
+      - main
+
+# Define the jobs to be executed
+jobs:
+  train-model:
+    # Define the runner environment
+    runs-on: ubuntu-latest
+
+    # Define the steps to be executed within the job
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 4: Run the training script
+      - name: Train model
+        run: |
+          python train.py
